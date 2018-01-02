@@ -5,5 +5,4 @@ class Photo
   field :small, type: String
   field :medium, type: String
   field :large, type: String
-  field :string, type: String
 end

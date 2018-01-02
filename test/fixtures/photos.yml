@@ -6,7 +6,6 @@ one:
   small: MyString
   medium: MyString
   large: MyString
-  string: MyString
 
 two:
   name: MyString
@@ -14,4 +13,3 @@ two:
   small: MyString
   medium: MyString
   large: MyString
-  string: MyString

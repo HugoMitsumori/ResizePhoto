@@ -8,7 +8,6 @@
       %th Small
       %th Medium
       %th Large
-      %th String
       %th
       %th
       %th
@@ -21,7 +20,6 @@
         %td= photo.small
         %td= photo.medium
         %td= photo.large
-        %td= photo.string
         %td= link_to 'Show', photo
         %td= link_to 'Edit', edit_photo_path(photo)
         %td= link_to 'Destroy', photo, method: :delete, data: { confirm: 'Are you sure?' }
