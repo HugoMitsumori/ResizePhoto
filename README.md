@@ -6,6 +6,7 @@
 
 
 
+
 - Setup (given ruby, rails and mongodb are installed):
 	bundle install
 

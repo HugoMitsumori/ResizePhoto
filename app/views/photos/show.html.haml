@@ -1,0 +1,24 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @photo.name
+%p
+  %b Original:
+  = @photo.original
+%p
+  %b Small:
+  = @photo.small
+%p
+  %b Medium:
+  = @photo.medium
+%p
+  %b Large:
+  = @photo.large
+%p
+  %b String:
+  = @photo.string
+
+= link_to 'Edit', edit_photo_path(@photo)
+\|
+= link_to 'Back', photos_path
