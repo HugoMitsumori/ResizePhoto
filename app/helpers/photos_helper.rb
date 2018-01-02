@@ -1,32 +1,48 @@
 module PhotosHelper
 
-	FETCH_URL = "http://54.152.221.29/images.json"
+  FETCH_URL = "http://54.152.221.29/images.json"
+  SIZES = {
+    "small" => [320, 240],
+    "medium" => [384, 288],
+    "large" => [640, 480]
+  }
 
-	def fetch_photos
-		response = RestClient.get(FETCH_URL)
-		photos = JSON.parse(response)
 
-		photos['images'].each do |photo|
-			photo_file = download photo['url']
+  def fetch_photos
+    response = RestClient.get(FETCH_URL)
+    photos = JSON.parse(response)
 
-			resized = resize_photo photo_file.path
-			#resized['original'] = photo_file
+    photos['images'].each do |photo|
+      name = photo['url'].split('/').last
+      
+      photo_file = download photo['url']
 
-			# Photo.new 
-			photo_file.close(true)
-		end
-	end
+      resized = resize_photo photo_file.path, name
+      resized['name'] = name.split('.').first
+      resized['original'] = photo['url']
 
-	def download (url)
-		content = open(url).read
-		file = Tempfile.new("temp", :encoding => 'ascii-8bit')
-		file << content
-		return file
-	end
+      # Photo.new 
+      photo_file.close(true)
+    end
+  end
 
-	def resize_photo (path)
-		resized = {}
+  def download (url)
+    content = open(url).read
+    file = Tempfile.new("temp", :encoding => 'ascii-8bit')
+    file << content
+    return file
+  end
 
-		return resized
-	end
+  def resize_photo (path, name)
+    resized = {}
+    SIZES.each do |size, dimensions|
+      resized_name = "#{size}-#{name}"
+      image = MiniMagick::Image.open path
+      image.resize("%dx%d" % dimensions)
+      image.format name.split('.').last
+      image.write "public/#{resized_name}"
+      resized[size] = "/#{resized_name}"
+    end
+    return resized
+  end
 end
