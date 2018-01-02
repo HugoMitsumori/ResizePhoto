@@ -1,6 +1,7 @@
 class PhotosController < ApplicationController
   before_action :set_photo, only: [:show, :edit, :update, :destroy]
 
+  include PhotosHelper
   # GET /photos
   # GET /photos.json
   def index
@@ -18,6 +19,7 @@ class PhotosController < ApplicationController
 
   # GET /photos/fetch
   def fetch
+    fetch_photos
     redirect_to photos_path
   end
 

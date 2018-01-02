@@ -35,6 +35,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'haml'
 gem 'haml-rails'
 
+gem 'rest-client'
 gem 'json'
 
 gem 'mini_magick'
