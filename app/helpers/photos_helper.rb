@@ -14,17 +14,24 @@ module PhotosHelper
     photos = JSON.parse(response)
 
     photos['images'].each do |photo|
-      name = photo['url'].split('/').last
+     
+      begin 
+        Photo.find photo['url']
 
-      photo_file = download photo['url']
+      # Process url only if not in database
+      rescue Mongoid::Errors::DocumentNotFound => error
+        name = photo['url'].split('/').last
 
-      resized = resize_photo photo_file.path, name
-      resized['name'] = name.split('.').first
-      resized['original'] = photo['url']
+        photo_file = download photo['url']
 
-      Photo.create(resized)
-      photo_file.close(true)
+        register = resize_photo( photo_file.path, name )
+        register['_id'] = photo['url']
+
+        Photo.create(register)
+        photo_file.close(true)
+      end
     end
+    generate_json
   end
 
   # downloads content from url and returns it as a temp file
@@ -44,8 +51,15 @@ module PhotosHelper
       image.resize("%dx%d" % dimensions)
       image.format name.split('.').last
       image.write "public/#{resized_name}"
-      resized[size] = "/#{resized_name}"
+      resized[size] = "#{request.original_url}#{resized_name}"
     end
     return resized
+  end
+
+  # puts database entries in json file
+  def generate_json
+    file = File.new("public/images.json", "w+")
+    file.write JSON.pretty_generate Photo.all.as_json
+    file.close
   end
 end

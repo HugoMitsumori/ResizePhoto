@@ -1,15 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
-  original: MyString
   small: MyString
   medium: MyString
   large: MyString
 
 two:
-  name: MyString
-  original: MyString
   small: MyString
   medium: MyString
   large: MyString

@@ -5,7 +5,10 @@ class PhotosController < ApplicationController
   # GET /photos
   # GET /photos.json
   def index
-    @photos = Photo.all
+    if not File.exists? "public/images.json"
+      fetch_photos
+    end
+    redirect_to "/images.json"
   end
 
   # GET /photos/1
@@ -75,6 +78,6 @@ class PhotosController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def photo_params
-      params.require(:photo).permit(:name, :original, :small, :medium, :large)
+      params.require(:photo).permit(:small, :medium, :large)
     end
 end
