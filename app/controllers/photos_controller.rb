@@ -14,7 +14,11 @@ class PhotosController < ApplicationController
 
   # GET /photos/new
   def new
-    @photo = Photo.new
+  end
+
+  # GET /photos/fetch
+  def fetch
+    redirect_to photos_path
   end
 
   # GET /photos/1/edit
