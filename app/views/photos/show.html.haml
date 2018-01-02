@@ -5,18 +5,15 @@
   = @photo.name
 %p
   %b Original:
-  = @photo.original
+  = link_to @photo.original, @photo.original
 %p
   %b Small:
-  = @photo.small
+  = link_to @photo.small, @photo.small
 %p
   %b Medium:
-  = @photo.medium
+  = link_to @photo.medium, @photo.medium
 %p
   %b Large:
-  = @photo.large
+  = link_to @photo.large, @photo.large
 
-
-= link_to 'Edit', edit_photo_path(@photo)
-\|
 = link_to 'Back', photos_path
